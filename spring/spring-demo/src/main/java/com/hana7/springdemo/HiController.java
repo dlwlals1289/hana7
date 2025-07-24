@@ -13,7 +13,7 @@ public class HiController {
 	public String hi(String name) {
 		log.debug("Debug={}", name);
 		log.info("Hi! Info!!");
-		return "Hi" + name + "!!";
+		return "Hi " + name + "!!";
 	}
 
 	@GetMapping("/hi/{time}")

@@ -1,0 +1,49 @@
+@baseUrl=http://localhost:8081
+#@baseUrl=https://a.com
+
+### user - all
+GET {{baseUrl}}/users
+
+
+### user - add
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Sico",
+  "email": "abc@gmail.com",
+  "mobile": "010-1234-5678"
+}
+
+> {%
+    client.global.set("newerId", response.body.id);
+%}
+
+### user - update
+PATCH {{baseUrl}}/users/{{newerId}}
+Content-Type: application/json
+
+{
+  "name": "Sico2",
+  "email": "abc22@gmail.com",
+  "mobile": "010-1234-5622"
+}
+
+### user - delete
+DELETE {{baseUrl}}/users/{{newerId}}
+
+### user - get one
+GET {{baseUrl}}/users/{{newerId}}
+
+### hello
+GET {{baseUrl}}/hello
+
+### hi
+GET {{baseUrl}}/hi?name=Sico
+
+> {%
+    client.global.set("greeting", response.body);
+%}
+
+### hi/{name}
+GET {{baseUrl}}/hi/{{greeting}}
