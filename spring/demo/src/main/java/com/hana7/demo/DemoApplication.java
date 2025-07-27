@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.cglib.proxy.Dispatcher;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -33,11 +36,17 @@ public class DemoApplication {
 		applicationContext.refresh();
 
 		new TomcatServletWebServerFactory().getWebServer(servletContext -> {
+<<<<<<< Updated upstream
 			// servletContext.addServlet("hello", getHttpServlet(applicationContext))
 			servletContext.addServlet("dispatcherServlet", new DispatcherServlet(applicationContext))
 				.addMapping("/*");
 			// }).addMapping("/hello-servlet");
+=======
+			servletContext.addServlet("dispatcherServlet", new DispatcherServlet(applicationContext))
+					.addMapping("/*");
+>>>>>>> Stashed changes
 		}).start();
+
 		// SpringApplication.run(DemoApplication.class, args);
 	}
 
