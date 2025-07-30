@@ -1,5 +1,6 @@
 package com.hana7.springdemo.jpa.entity;
 
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
@@ -18,7 +19,8 @@ import lombok.ToString;
 
 @Entity
 @DynamicInsert
-@Getter @Setter @Builder
+@Getter @Setter
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)

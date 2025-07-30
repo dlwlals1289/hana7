@@ -2,6 +2,7 @@ package com.hana7.springdemo.jpa.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -31,8 +32,10 @@ public class BoardController {
 	}
 
 	@PostMapping()
-	public BoardResponseDTO createBoard(@RequestBody @Validated BoardRequestDTO requestDTO) {
-		return service.createBoard(requestDTO);
+	public ResponseEntity<String> createBoard(@RequestBody @Validated BoardRequestDTO requestDTO) {
+		return ResponseEntity
+				.status(service.createBoard(requestDTO))
+				.body("게시글 생성 성공");
 	}
 
 	@GetMapping("/{id}")

@@ -3,23 +3,27 @@ package com.hana7.springdemo.jpa.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.hana7.springdemo.jpa.dto.*;
+import com.hana7.springdemo.jpa.entity.Member;
+import com.hana7.springdemo.jpa.entity.Reply;
+import com.hana7.springdemo.jpa.repository.MemberRepository;
+import com.hana7.springdemo.jpa.repository.ReplyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
-import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
-import com.hana7.springdemo.jpa.dto.PageResponseDTO;
 import com.hana7.springdemo.jpa.entity.Board;
 import com.hana7.springdemo.jpa.repository.BoardRepository;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 	private final BoardRepository repository;
-	public BoardServiceImpl(BoardRepository repository) {
-		this.repository = repository;
-	}
+	private final ReplyRepository replyRepository;
+	private final MemberRepository memberRepository;
 
 	@Override
 	public List<BoardResponseDTO> getPageList(int page, int countPerPage) {
@@ -31,36 +35,66 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardResponseDTO getBoard(int id) {
-		Optional<Board> byId = repository.findById(id);
-		return byId.map(BoardServiceImpl::toDTO).orElse(null);
+		Board board = repository.findById(id).orElseThrow();
+		List<Reply> replies = replyRepository.findAllByBoard(board);
 
+		return toDetailDTO(board, replies);
 	}
 
 	@Override
-	public BoardResponseDTO createBoard(BoardRequestDTO requestDTO) {
+	public HttpStatus createBoard(BoardRequestDTO requestDTO) {
 		Board board = toEntity(requestDTO);
-		return toDTO(repository.save(board));
+		repository.save(board);
+		return HttpStatus.CREATED;
 	}
 
 	@Override
 	public BoardResponseDTO changeBoard(BoardRequestDTO requestDTO) {
-		return toDTO(repository.save(toEntity(requestDTO)));
+		Board board = repository.findById(requestDTO.getId()).orElseThrow();
+		List<Reply> replies = replyRepository.findAllByBoard(board);
+
+		return toDetailDTO(board, replies);
 	}
 
-	public static Board toEntity(BoardRequestDTO dto) {
+	public Board toEntity(BoardRequestDTO dto) {
+		Member writer = memberRepository.findById(dto.getWriterId()).orElseThrow();
+
 		return Board.builder()
 			.id(dto.getId())
 			.title(dto.getTitle())
-			.writer(dto.getWriter())
+			.writer(writer)
 			.build();
+	}
+
+	public BoardDetailResponseDTO toDetailDTO(Board board, List<Reply> replies) {
+
+		Long writerId = board.getWriter().getId();
+		Member writer = memberRepository.findById(writerId).orElseThrow();
+
+		List<ReplyResponseDto> replyDto = replies.stream()
+				.map((r) -> ReplyResponseDto.builder()
+						.id(r.getId())
+						.reply(r.getReply())
+						.replyer(r.getReplyer().getNickname())
+						.build())
+				.toList();
+
+		return BoardDetailResponseDTO.builder()
+			.id(board.getId())
+			.title(board.getTitle())
+			.writer(writer.getNickname())
+			.hit(board.getHit())
+			.content(board.getContent().getContent())
+			.replyResponseDto(replyDto)
+			.createdAt(board.getCreatedAt()).build();
 	}
 
 	public static BoardResponseDTO toDTO(Board board) {
 		return BoardResponseDTO.builder()
-			.id(board.getId())
-			.title(board.getTitle())
-			.writer(board.getWriter())
-			.hit(board.getHit())
-			.createdAt(board.getCreatedAt()).build();
+				.id(board.getId())
+				.title(board.getTitle())
+				.writer(board.getWriter().getNickname())
+				.hit(board.getHit())
+				.createdAt(board.getCreatedAt()).build();
 	}
 }

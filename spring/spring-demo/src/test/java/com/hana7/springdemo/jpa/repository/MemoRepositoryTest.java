@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.util.StringUtils;
 
 import com.hana7.springdemo.jpa.entity.Memo;
@@ -26,7 +27,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 // @Transactional
 // @DataJpaTest
 // @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-// @Rollback(false)
+ @Rollback(false)
 class MemoRepositoryTest extends RepositoryTest {
 	@Autowired
 	MemoRepository repository;
@@ -59,7 +60,6 @@ class MemoRepositoryTest extends RepositoryTest {
 	}
 
 	@Test
-	@Commit
 	@Order(2)
 	void add100Test() {
 		List<Memo> list = Stream.iterate(1, n -> n + 1).limit(100)

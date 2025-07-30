@@ -19,7 +19,7 @@ public class BoardRequestDTO {
 
 	@NotBlank
 	@Size(min = 1, max = 30)
-	private String writer;
+	private long writerId;
 
 	@NotBlank
 	private String content;

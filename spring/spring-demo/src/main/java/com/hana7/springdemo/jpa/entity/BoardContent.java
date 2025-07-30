@@ -1,15 +1,6 @@
 package com.hana7.springdemo.jpa.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,8 +17,8 @@ public class BoardContent extends BaseEntity {
 	@Column(columnDefinition = "TEXT", nullable = false)
 	private String content;
 
-	@OneToOne()
-	@JoinColumn(name="board")
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="boardId")
 	private Board board;
 
 	public BoardContent(String content) {
