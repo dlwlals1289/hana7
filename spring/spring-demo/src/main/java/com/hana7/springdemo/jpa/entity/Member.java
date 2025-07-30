@@ -52,9 +52,6 @@ public class Member extends BaseEntity {
 
 	@OneToMany(mappedBy = "writer",  cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonManagedReference
-	private List<Board> boards;
+	private List<Board> boards = new ArrayList<>();
 
-	@OneToMany(mappedBy = "replyer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonManagedReference
-	private List<Reply> replies;
 }

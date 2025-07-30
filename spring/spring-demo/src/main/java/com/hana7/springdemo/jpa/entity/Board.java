@@ -14,6 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,7 +44,7 @@ public class Board extends BaseEntity {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Reply> replies;
+	private List<Reply> replies = new ArrayList<>();
 
 	@OneToOne(mappedBy = "board", cascade = CascadeType.ALL)
 	private BoardContent content;

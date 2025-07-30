@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardResponseDTO getBoard(int id) {
 		Board board = repository.findById(id).orElseThrow();
-		List<Reply> replies = replyRepository.findAllByBoard(board);
+		List<Reply> replies = board.getReplies();
 
 		return toDetailDTO(board, replies);
 	}
@@ -68,8 +68,7 @@ public class BoardServiceImpl implements BoardService {
 
 	public BoardDetailResponseDTO toDetailDTO(Board board, List<Reply> replies) {
 
-		Long writerId = board.getWriter().getId();
-		Member writer = memberRepository.findById(writerId).orElseThrow();
+		Member writer = board.getWriter();
 
 		List<ReplyResponseDto> replyDto = replies.stream()
 				.map((r) -> ReplyResponseDto.builder()
