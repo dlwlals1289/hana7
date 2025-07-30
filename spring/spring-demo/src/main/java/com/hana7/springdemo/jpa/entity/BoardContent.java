@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class BoardContent extends BaseEntity {
 	@Id
@@ -17,8 +18,8 @@ public class BoardContent extends BaseEntity {
 	@Column(columnDefinition = "TEXT", nullable = false)
 	private String content;
 
-	@OneToOne(cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name="boardId")
+	@OneToOne
+	@JoinColumn(name = "board")
 	private Board board;
 
 	public BoardContent(String content) {

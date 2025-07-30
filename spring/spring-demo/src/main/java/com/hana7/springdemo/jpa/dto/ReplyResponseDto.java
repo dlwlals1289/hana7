@@ -8,5 +8,5 @@ import lombok.Data;
 public class ReplyResponseDto {
 	private Long id;
 	private String reply;
-	private String replyer;
+	private MemberResponseDTO replyer;
 }

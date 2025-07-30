@@ -1,22 +1,12 @@
 package com.hana7.springdemo.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.experimental.SuperBuilder;
+import jakarta.validation.constraints.Email;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +14,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString(callSuper = true)
 
 @EqualsAndHashCode(callSuper = true)
@@ -50,8 +41,21 @@ public class Member extends BaseEntity {
 	@Builder.Default
 	private int auth = 9;
 
-	@OneToMany(mappedBy = "writer",  cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(
+			mappedBy = "writer",
+			cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER,
+			orphanRemoval = true
+	)
 	@JsonManagedReference
-	private List<Board> boards = new ArrayList<>();
+	private List<Board> boards;
 
+	@OneToMany(
+			mappedBy = "replyer",
+//			cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER
+//			orphanRemoval = true
+	)
+	@JsonManagedReference
+	private List<Reply> replies;
 }

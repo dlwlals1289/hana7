@@ -3,23 +3,15 @@ package com.hana7.springdemo.jpa.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Builder
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +24,7 @@ public class Board extends BaseEntity {
 	@Column(length = 40, nullable = false)
 	private String title;
 
-	@ManyToOne()
+	@ManyToOne
 	@JsonBackReference
 	@JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_Board_member"))
 	@ToString.Exclude
@@ -43,10 +35,19 @@ public class Board extends BaseEntity {
 	private int hit;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Reply> replies = new ArrayList<>();
+	@OneToMany(
+			mappedBy = "board",
+			cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER,
+			orphanRemoval = true
+	)
+	private List<Reply> replies;
 
-	@OneToOne(mappedBy = "board", cascade = CascadeType.ALL)
+	@OneToOne(
+			mappedBy = "board",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
 	private BoardContent content;
 
 	public void setContent(BoardContent content) {
