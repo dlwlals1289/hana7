@@ -1,21 +1,21 @@
 package com.hana7.springdemo.jpa.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
+import com.hana7.springdemo.jpa.entity.BloodType;
+import com.hana7.springdemo.jpa.entity.Board;
+import com.hana7.springdemo.jpa.entity.BoardContent;
+import com.hana7.springdemo.jpa.entity.Member;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import com.hana7.springdemo.jpa.entity.BloodType;
-import com.hana7.springdemo.jpa.entity.Board;
-import com.hana7.springdemo.jpa.entity.BoardContent;
-import com.hana7.springdemo.jpa.entity.Member;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // @Rollback(false)
 class BoardRepositoryTest extends RepositoryTest {
@@ -31,12 +31,12 @@ class BoardRepositoryTest extends RepositoryTest {
 		long preCount = repository.count();
 
 		List<Board> list = Stream.iterate(1, n -> n + 1)
-			.limit(LIMIT)
-			.map(n -> Board.builder()
-				.title("Title" + n)
-				.writer(getMember())
-				.build())
-			.toList();
+				.limit(LIMIT)
+				.map(n -> Board.builder()
+						.title("Title" + n)
+						.writer(getMember())
+						.build())
+				.collect(Collectors.toList());
 
 		list.forEach(b -> b.setContent(new BoardContent("xxx", b)));
 
@@ -53,17 +53,17 @@ class BoardRepositoryTest extends RepositoryTest {
 	@Order(2)
 	void pageListTest() {
 		repository.findAll(
-			PageRequest.of(0, 10, Sort.by(Sort.Order.desc("id")))).forEach(this::print);
+				PageRequest.of(0, 10, Sort.by(Sort.Order.desc("id")))).forEach(this::print);
 	}
 
 	private Member getMember() {
 		Optional<Member> memberOptional = memberRepository.findById(1L);
 
 		return memberOptional.orElseGet(() -> memberRepository.save(Member.builder()
-			.nickname("Hongxxx")
-			.email("hongxxxx@gmail.com")
-			.bloodType(BloodType.B)
-			.build()
+				.nickname("Hongxxx")
+				.email("hongxxxx@gmail.com")
+				.bloodType(BloodType.B)
+				.build()
 		));
 	}
 }

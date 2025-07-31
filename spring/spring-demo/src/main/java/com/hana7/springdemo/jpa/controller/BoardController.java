@@ -1,23 +1,14 @@
 package com.hana7.springdemo.jpa.controller;
 
-import java.util.List;
-
+import com.hana7.springdemo.jpa.dto.ErrorResponseDTO;
+import com.hana7.springdemo.jpa.dto.board.BoardRequestDTO;
+import com.hana7.springdemo.jpa.dto.board.BoardResponseDTO;
+import com.hana7.springdemo.jpa.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.hana7.springdemo.jpa.dto.BoardRequestDTO;
-import com.hana7.springdemo.jpa.dto.BoardResponseDTO;
-import com.hana7.springdemo.jpa.dto.ErrorResponseDTO;
-import com.hana7.springdemo.jpa.service.BoardService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/boards")
@@ -30,7 +21,7 @@ public class BoardController {
 
 	@GetMapping
 	public List<BoardResponseDTO> getPageList(@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "10") int countPerPage) {
+											  @RequestParam(defaultValue = "10") int countPerPage) {
 		return service.getPageList(page, countPerPage);
 	}
 
@@ -46,7 +37,7 @@ public class BoardController {
 			return ResponseEntity.ok(board);
 
 		return ResponseEntity.status(404).body(
-			new ErrorResponseDTO(id + "를 찾을 수 없습니다.", "NOT_FOUND"));
+				new ErrorResponseDTO(id + "를 찾을 수 없습니다.", "NOT_FOUND"));
 	}
 
 	@PatchMapping("/{id}")

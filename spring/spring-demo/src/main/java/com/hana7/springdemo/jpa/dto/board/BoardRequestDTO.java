@@ -1,4 +1,4 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.board;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

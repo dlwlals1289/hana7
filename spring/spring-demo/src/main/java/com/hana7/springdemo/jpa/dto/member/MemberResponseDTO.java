@@ -1,4 +1,4 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.member;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

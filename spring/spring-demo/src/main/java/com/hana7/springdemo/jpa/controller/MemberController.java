@@ -1,16 +1,11 @@
 package com.hana7.springdemo.jpa.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.hana7.springdemo.jpa.dto.MemberDTO;
 import com.hana7.springdemo.jpa.dto.SearchCond;
+import com.hana7.springdemo.jpa.dto.member.MemberDTO;
 import com.hana7.springdemo.jpa.service.MemberService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")

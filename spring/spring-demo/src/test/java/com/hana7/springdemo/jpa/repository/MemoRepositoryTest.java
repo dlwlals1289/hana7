@@ -1,12 +1,9 @@
 package com.hana7.springdemo.jpa.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
+import com.hana7.springdemo.jpa.entity.Memo;
+import com.hana7.springdemo.jpa.entity.QMemo;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.util.StringUtils;
 
-import com.hana7.springdemo.jpa.entity.Memo;
-import com.hana7.springdemo.jpa.entity.QMemo;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 // @SpringBootTest
 // @Transactional
@@ -30,6 +31,14 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 class MemoRepositoryTest extends RepositoryTest {
 	@Autowired
 	MemoRepository repository;
+
+	private static Sort getSorting(String field) {
+		return Sort.by(Sort.Order.desc(field));
+	}
+
+	private static Pageable getPageable(int pageNo, Sort sorting) {
+		return PageRequest.of(pageNo - 1, 10, sorting);
+	}
 
 	@Test
 	@Order(1)
@@ -63,8 +72,8 @@ class MemoRepositoryTest extends RepositoryTest {
 	@Order(2)
 	void add100Test() {
 		List<Memo> list = Stream.iterate(1, n -> n + 1).limit(100)
-			.map(n -> Memo.builder().memoText("Text" + n).build())
-			.toList();
+				.map(n -> Memo.builder().memoText("Text" + n).build())
+				.collect(Collectors.toList());
 
 		repository.saveAll(list);
 
@@ -113,7 +122,7 @@ class MemoRepositoryTest extends RepositoryTest {
 		list.forEach(this::print);
 
 		List<Object[]> listSome = repository.getListSomeDesc();
-		for(Object[] objs : listSome) {
+		for (Object[] objs : listSome) {
 			System.out.println(Arrays.toString(objs));
 		}
 	}
@@ -125,9 +134,9 @@ class MemoRepositoryTest extends RepositoryTest {
 		memo5s.forEach(this::print);
 
 		repository.findAll(
-			QMemo.memo.mno.goe(60)
-				.and(QMemo.memo.memoText.contains("5")))
-			.forEach(this::print);
+						QMemo.memo.mno.goe(60)
+								.and(QMemo.memo.memoText.contains("5")))
+				.forEach(this::print);
 
 		BooleanBuilder bb = new BooleanBuilder();
 		// BooleanExpression over60 = QMemo.memo.mno.goe(60);
@@ -150,18 +159,10 @@ class MemoRepositoryTest extends RepositoryTest {
 		return null;
 	}
 
-	private static Sort getSorting(String field) {
-		return Sort.by(Sort.Order.desc(field));
-	}
-
-	private static Pageable getPageable(int pageNo, Sort sorting) {
-		return PageRequest.of(pageNo - 1, 10, sorting);
-	}
-
-
 	private void printList(List<Memo> list) {
 		list.forEach(this::print);
 	}
+
 	private void print(Memo memo) {
 		System.out.println(memo.getMno() + " - " + memo.getMemoText());
 	}

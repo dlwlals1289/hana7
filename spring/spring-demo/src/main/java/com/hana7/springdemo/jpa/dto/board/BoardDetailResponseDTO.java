@@ -1,14 +1,15 @@
-package com.hana7.springdemo.jpa.dto;
-
-import java.util.List;
+package com.hana7.springdemo.jpa.dto.board;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.hana7.springdemo.jpa.dto.ReplyResponseDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter @Setter
+import java.util.List;
+
+@Getter
+@Setter
 @SuperBuilder
 public class BoardDetailResponseDTO extends BoardResponseDTO {
 	private String content;

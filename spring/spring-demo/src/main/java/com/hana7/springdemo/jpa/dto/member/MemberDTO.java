@@ -1,8 +1,7 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.member;
 
 import com.hana7.springdemo.jpa.entity.BloodType;
 import com.hana7.springdemo.jpa.entity.Member;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

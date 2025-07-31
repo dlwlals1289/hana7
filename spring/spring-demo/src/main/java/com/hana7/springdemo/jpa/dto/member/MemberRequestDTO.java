@@ -1,7 +1,6 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.member;
 
 import com.hana7.springdemo.jpa.entity.Member;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,19 +1,20 @@
 package com.hana7.springdemo.jpa.entity;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@Getter @ToString
+import java.time.LocalDateTime;
+
+@Getter
+@ToString
+@SuperBuilder(toBuilder = true)
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor

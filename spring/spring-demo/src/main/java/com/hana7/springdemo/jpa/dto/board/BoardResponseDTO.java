@@ -1,10 +1,11 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.board;
 
-import java.time.LocalDateTime;
-
+import com.hana7.springdemo.jpa.dto.member.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @Getter

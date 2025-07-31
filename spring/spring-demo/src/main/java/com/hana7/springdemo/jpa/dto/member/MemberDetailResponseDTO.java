@@ -1,10 +1,11 @@
-package com.hana7.springdemo.jpa.dto;
+package com.hana7.springdemo.jpa.dto.member;
 
-import java.util.List;
-
+import com.hana7.springdemo.jpa.dto.board.BoardDetailResponseDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @SuperBuilder
 @Getter
