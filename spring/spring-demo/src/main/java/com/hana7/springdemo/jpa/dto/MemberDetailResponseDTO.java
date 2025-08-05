@@ -1,10 +1,10 @@
 package com.hana7.springdemo.jpa.dto;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @SuperBuilder
 @Getter
@@ -12,4 +12,5 @@ import lombok.experimental.SuperBuilder;
 public class MemberDetailResponseDTO extends MemberDTO {
 	private int auth;
 	private List<BoardDetailResponseDTO> boards;
+	private List<ImageResponseDTO> images;
 }

@@ -1,28 +1,13 @@
 package com.hana7.springdemo.jpa.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @DynamicInsert
@@ -58,6 +43,9 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "writer")
 	// @OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Board> boards;
+
+	@OneToMany(mappedBy = "member")
+	private List<MemberImage> images;
 
 	public List<Board> getBoards() {
 		if (this.boards == null)
