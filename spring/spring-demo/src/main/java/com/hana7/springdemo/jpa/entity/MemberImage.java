@@ -19,11 +19,11 @@ public class MemberImage extends BaseEntity {
 	@JoinColumn(
 			name = "member",
 			foreignKey = @ForeignKey(
-					name = "fk_MemberImage_writer_Member",
+					name = "fk_MemberImage_member",
 					foreignKeyDefinition = """
 								foreign key (member)
 								   references Member(id)
-								    on DELETE cascade on UPDATE set null
+								    on DELETE cascade on UPDATE cascade on
 							"""
 			)
 	)

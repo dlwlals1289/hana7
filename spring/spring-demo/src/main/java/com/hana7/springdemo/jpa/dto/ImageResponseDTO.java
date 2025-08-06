@@ -1,9 +1,8 @@
 package com.hana7.springdemo.jpa.dto;
 
+import com.hana7.springdemo.jpa.entity.MemberImage;
 import lombok.Builder;
 import lombok.Data;
-
-import java.io.File;
 
 @Data
 @Builder
@@ -12,5 +11,20 @@ public class ImageResponseDTO {
 
 	private String orgName;
 
-	private File file;
+	private String saveName;
+
+	private String savedir;
+
+	public String getLink() {
+		return "members/view/" + saveName + "?savedir" + savedir;
+	}
+
+	public MemberImage toEntity() {
+		return MemberImage.builder()
+				.orgName(orgName)
+				.saveName(saveName)
+				.saveDir(savedir)
+				.build();
+	}
+
 }

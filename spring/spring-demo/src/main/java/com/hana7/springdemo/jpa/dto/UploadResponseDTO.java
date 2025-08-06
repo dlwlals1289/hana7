@@ -6,14 +6,11 @@ import lombok.Data;
 @Data
 @Builder
 public class UploadResponseDTO {
-	private String orgFname;
-	private String fname;
+	private String saveName;
+	private String savedir;
 	private boolean isImage;
 
 	public String getLink() {
-		if (isImage)
-			return "thumb_" + fname;
-
-		return fname;
+		return "members/view/" + saveName + "?savedir" + savedir;
 	}
 }

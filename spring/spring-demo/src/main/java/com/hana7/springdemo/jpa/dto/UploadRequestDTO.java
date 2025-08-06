@@ -23,7 +23,7 @@ public class UploadRequestDTO {
 
 	public List<MemberImage> toEntity(String uploadPath) {
 		LocalDateTime now = LocalDateTime.now();
-		String newPath = uploadPath + String.format("/%4d/%02d/%02d", now.getYear(),
+		String newPath = uploadPath + File.separator + String.format("%4d/%02d/%02d", now.getYear(),
 				now.getMonthValue(), now.getDayOfMonth());
 
 		return this.files.stream().map(file -> {

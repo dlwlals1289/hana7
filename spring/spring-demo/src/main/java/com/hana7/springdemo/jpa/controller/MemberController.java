@@ -68,9 +68,8 @@ public class MemberController {
 					}
 
 					upfiles.add(UploadResponseDTO.builder()
-							.orgFname(orgFname)
-							.fname(savedFname)
-							.isImage(isImage)
+							.saveName(savedFname)
+							.savedir(uploadDir.toString())
 							.build());
 
 				} catch (IOException e) {
@@ -86,8 +85,9 @@ public class MemberController {
 	@Tag(name = "Download File")
 	@Operation(summary = "Download Image")
 	@GetMapping("/view/{fileName}")
-	public ResponseEntity<Resource> viewFile(@PathVariable String fileName) throws IOException {
-		Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+	public ResponseEntity<Resource> viewFile(@PathVariable String fileName,
+											 @RequestParam(required = true) String savedir) throws IOException {
+		Resource resource = new FileSystemResource(uploadPath + File.separator + savedir + File.separator + fileName);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, Files.probeContentType(resource.getFile().toPath()));
 

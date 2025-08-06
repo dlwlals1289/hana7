@@ -14,7 +14,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -73,15 +72,12 @@ public class MemberServiceImpl implements MemberService {
 		List<ImageResponseDTO> imageDtos = images.stream()
 				.map((image) -> {
 					Resource resource = new FileSystemResource(uploadPath + File.separator + image.getSaveName());
-					try {
-						return ImageResponseDTO.builder()
-								.id(image.getId())
-								.orgName(image.getOrgName())
-								.file(resource.getFile())
-								.build();
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
+					return ImageResponseDTO.builder()
+							.id(image.getId())
+							.orgName(image.getOrgName())
+							.saveName(image.getSaveName())
+							.savedir(image.getSaveDir())
+							.build();
 				})
 				.toList();
 

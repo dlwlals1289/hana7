@@ -1,7 +1,6 @@
 package com.hana7.springdemo.jpa.service;
 
 import com.hana7.springdemo.jpa.dto.UploadRequestDTO;
-import com.hana7.springdemo.jpa.dto.UploadResponseDTO;
 import com.hana7.springdemo.jpa.entity.Member;
 import com.hana7.springdemo.jpa.entity.MemberImage;
 import com.hana7.springdemo.jpa.repository.MemberImageRepository;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +26,6 @@ public class MemberImageServiceImpl implements MemberImageService {
 	@Transactional
 	public void addImages(UploadRequestDTO dto) {
 		Member member = memberRepository.findById(dto.getMemberId()).orElseThrow();
-
-		List<UploadResponseDTO> upfiles = new ArrayList<>();
 
 		if (dto.getFiles() != null) {
 			List<MemberImage> images = dto.toEntity(uploadPath);
