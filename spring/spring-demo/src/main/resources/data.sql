@@ -10,6 +10,14 @@ values ('hongx', 'hongx@gmail.com', 'A'),
        ('kimx', 'kimx@gmail.com', 'B');
 
 
+insert into Subscriber(email, nickname, pwd, social)
+values('sample@gmail.com', 'sub0', '$2a$10$nApvTucgdEquHDeO5pFcte9b7eeoDtM9.gaQFk8oJssUF3ZKY1/ZS', 0),
+        ('sample2@gmail.com', 'sub0', '$2a$10$nApvTucgdEquHDeO5pFcte9b7eeoDtM9.gaQFk8oJssUF3ZKY1/ZS', 0);
+
+insert into SubscriberRole(role, email) values(0, 'sample2@gmail.com'), (2, 'sample@gmail.com');
+
+
+
 INSERT INTO Board(hit, id, createdAt, updatedAt, writer, title)
 VALUES (0, 1, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title01'),
        (0, 2, '2025-07-29 07:21:24', '2025-07-29 07:21:24', 1, 'Title2'),
